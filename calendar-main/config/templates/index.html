@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8'/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  </head>
+  <body>
+    <div class="contanier" style="margin: 50px ;">
+        <div id='calendar'></div>
+    </div>
+        
+  </body>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var initialLocaleCode = 'en';
+    var localeSelectorEl = document.getElementById('locale-selector');
+    var calendarEl = document.getElementById('calendar');
+
+        $.ajax({
+          type: "GET",
+          url: "/api/events",
+          dataType: "json",
+          success: function(data){
+            container = []
+            for (let i = 0; i < data.length; i++) {
+              var title = data[i].title
+              var start_date = data[i].start_date
+              var end_date = data[i].end_date
+              container.push({title:title, start:start_date, end:end_date})
+            }
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+              selectable: true,
+              editable:true,
+              headerToolbar: {
+              left: 'prev,next today',
+              center: 'title',
+              right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+              },
+              timeZone: 'Asia/Tashkent',
+              events: container,
+        });
+
+            calendar.render();
+          }
+        });
+      });
+
+
+  </script>    
+</html>
