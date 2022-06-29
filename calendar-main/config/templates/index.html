@@ -2,15 +2,40 @@
 <html lang='en'>
   <head>
     <meta charset='utf-8'/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.3/moment.min.js"></script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js" integrity="sha512-Y+0b10RbVUTf3Mi0EgJue0FoheNzentTMMIE2OreNbqnUPNbQj8zmjK3fs5D2WhQeGWIem2G2UkKjAL/bJ/UXQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   </head>
   <body>
     <div class="contanier" style="margin: 50px ;">
-        <div id='calendar'></div>
+        <div id="calendar"></div>
+        <div id='datepicker'></div>
+          <!-- Modal -->
+          <div class="modal fade modalWindow" id="staticBackdrop "  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  ...
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Understood</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        
     </div>
         
   </body>
@@ -33,7 +58,6 @@
               container.push({title:title, start:start_date, end:end_date})
             }
             var calendar = new FullCalendar.Calendar(calendarEl, {
-              selectable: true,
               editable:true,
               headerToolbar: {
               left: 'prev,next today',
@@ -42,6 +66,11 @@
               },
               timeZone: 'Asia/Tashkent',
               events: container,
+              selectable: true,
+              select:function(start, end, allDays){
+                $('.modalWindow').modal('toggle');
+              }
+
         });
 
             calendar.render();
@@ -50,5 +79,42 @@
       });
 
 
-  </script>    
+  </script>      
+<!-- //  <script>
+//     $(document).ready(function(){
+//       $('#calendar').fullCalendar({
+//         navLinks: true,
+//         selectHelper:true,
+//         select:function(start,end){
+//           $('.modal').modal('show');
+//         },
+//         eventClick:function(event,element){
+//           $('.modal').modal('show');
+//           $('.modal').find('#title').val(event.title);
+//           $('.modal').find('#start_at').val(event.start.format('YYYY-MM-DD'));
+//           $('.modal').find('#end_at').val(event.end.format('YYYY-MM-DD'));
+//         },
+//         editable:true,
+//         eventLimit:true
+//       });
+//       $('#start_at,#end_at').datetimepicker();
+//       $('#save-event').on('click', function(){
+//         var title = $('#title').val();
+//         if(title){
+//           var eventData = {
+//             title:title,
+//             start:$('#start_at').val,
+//             end:$('#end_at').val
+//           };
+//           $('#calendar').fullCalendar('renderEvent',eventData,true);
+//         }
+//         $('#calendar').fullCalendar('unselect');
+//         $('.mdoal').find('input').val('');
+//         $('.modal').mdoal('hide');
+//       });
+//       calendar.render()
+//     });
+//   </script> -->
+  
+</body>
 </html>
